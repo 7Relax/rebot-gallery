@@ -3,6 +3,7 @@ import logo from './assets/images/logo.svg'
 // 将css转换成对象，再通过访问对象的形式来获取样式
 import style from './App.module.css'
 import Robot from "./components/Robot"
+import RobotDiscount from "./components/RobotDiscount"
 import ShoppingCart from './components/ShoppingCart'
 
 interface Props {
@@ -71,8 +72,13 @@ const App: React.FC<Props>= (props) => {
       {
         !loading ?
         <div className={style.robotList}>
-          { robotGallery.map(r =>
-            <Robot id={r.id} name={r.name} email={r.email} key={r.id} />) }
+          {
+            robotGallery.map((r, index) =>
+              index % 2 === 0 ?
+              <RobotDiscount id={r.id} name={r.name} email={r.email} key={r.id} />
+              : <Robot id={r.id} name={r.name} email={r.email} key={r.id} />
+            )
+          }
         </div>
         : <h2>loading 加载中</h2>
       }
