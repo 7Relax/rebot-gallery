@@ -6,9 +6,31 @@ import robots from './mockdata/robots.json'
 import Robot from "./components/Robot"
 import ShoppingCart from './components/ShoppingCart'
 
-function App() {
-  return (
-    <div className={style.app}>
+interface Props {
+}
+
+interface State {
+  robotGallery: any
+}
+
+// 把函数式组件转成类组件，为了学习React组件的生命周期的相关知识
+class App extends React.Component<Props, State> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      robotGallery: []
+    }
+  }
+
+  // DOM元素被挂载后时执行
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(data => this.setState({ robotGallery: data }))
+  }
+
+  render() {
+    return <div className={style.app}>
 
       <div className={style.appHeader}>
         <img src={logo} className={style.appLogo} alt="logo" />
@@ -18,11 +40,12 @@ function App() {
       <ShoppingCart />
 
       <div className={style.robotList}>
-        { robots.map(r => <Robot id={r.id} name={r.name} email={r.email} key={r.id} />) }
+        { this.state.robotGallery.map(r =>
+          <Robot id={r.id} name={r.name} email={r.email} key={r.id} />) }
       </div>
 
     </div>
-  )
+  }
 }
 
 export default App
