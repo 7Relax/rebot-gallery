@@ -3,19 +3,14 @@ import ReactDOM from 'react-dom'
 import './index.css' // 引用全局样式
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-
-const defaultContextValue = {
-  username: 'context-seven'
-}
-// 上下文关系对象
-export const appContext = React.createContext(defaultContextValue)
+import { AppStateProvider } from './AppState'
 
 ReactDOM.render(
   <React.StrictMode>
-    <appContext.Provider value={defaultContextValue}>
+    <AppStateProvider>
       {/* 这是通过props的方式传递数据 */}
       <App username={'props-seven'}/>
-    </appContext.Provider>
+    </AppStateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
