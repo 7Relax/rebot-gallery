@@ -5,8 +5,12 @@ import style from './App.module.css'
 import Robot from "./components/Robot"
 import ShoppingCart from './components/ShoppingCart'
 
+interface Props {
+  username: string
+}
+
 // 函数式组件
-const App: React.FC = () => {
+const App: React.FC<Props>= (props) => {
   const [count, setCount] = useState<number>(0)
   const [robotGallery, setRobotGallery] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -48,6 +52,8 @@ const App: React.FC = () => {
         <img src={logo} className={style.appLogo} alt="logo" />
         <h1 className={style.headerFamily}>罗伯特机器人</h1>
       </div>
+
+      <h2>{props.username}</h2>
 
       <button
         onClick={() => {
