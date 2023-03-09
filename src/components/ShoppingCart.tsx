@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './ShoppingCart.module.css'
+import { FiShoppingCart } from 'react-icons/fi'
 
 interface Props {
 
@@ -21,19 +22,37 @@ class ShoppingCart extends React.Component<Props, State> {
     this.state = {
       isOpen: false,
     }
+    // this.handleClick = this.handleClick.bind(this)
   }
+
+  // 可以开启 any 类型自动映射: "noImplicitAny": false
+  handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // 这里面的 this 要注意并不是指 ShoppingCart 实例，而是指向 handleClick
+    // 所以这里的解决办法就是用 箭头函数 或者调用时用 bind 指定 this
+    // 如：this.handleClick.bind(this)
+
+    console.log('e.target', e.target)               // e.target: 描述事件发生的元素
+    console.log('e.currentTarget', e.currentTarget) // e.currentTarget: 描述事件绑定的元素
+    // 类型转换后再做判断
+    if ((e.target as HTMLElement).nodeName === 'SPAN') {
+      this.setState({ isOpen: !this.state.isOpen })
+    }
+  }
+
   // 渲染 html
   render() {
     return (
       <div className={style.cartContainer}>
         <button
           className={style.button}
-          onClick={() => {
-            this.setState({ isOpen: !this.state.isOpen })
-          }}
-        >购物车 2 (件)</button>
+          onClick={this.handleClick}
+        >
+          <FiShoppingCart />
+          <span>购物车 2 (件)</span>
+        </button>
 
-        <div className={style.cartDropDown}
+        <div
+          className={style.cartDropDown}
           style={{ display: this.state.isOpen ? 'block' : 'none' }}
         >
           <ul>
